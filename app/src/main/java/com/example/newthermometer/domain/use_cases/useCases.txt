@@ -1,0 +1,16 @@
+GetConfiguration
+SetConfiguration
+Configuration:
+Sensor Ip-address
+Frequency temperature get interval
+Temperature limit one
+Temperature limit two
+
+Notifications
+Subscribe to notifications
+
+Start updating temperature value
+Stop updating temperature value
+
+Get temperature value from ip address
+
