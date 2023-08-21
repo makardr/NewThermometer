@@ -2,45 +2,39 @@ package com.example.newthermometer.presentation.main_activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.newthermometer.ui.theme.NewThermometerTheme
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.example.newthermometer.R
+import com.example.newthermometer.domain.preferences.model.MyPreferences
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 
-class MainActivity : ComponentActivity() {
+
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+    //AppCompatActivity for some reason crashes, would be interesting to figure out why
+    //private val viewModel: MainActivityViewModel by viewModels()
+    //private lateinit var viewModel: MainActivityViewModel
+    private val viewModel: MainActivityViewModel by viewModels()
+    val TAG = "MainActivity"
+    private lateinit var prefs: MyPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            NewThermometerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+//        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+
+//        // Observe LiveData from the ViewModel
+//        viewModel.myLiveData.observe(this) { data ->
+//            // Handle the data
+//        }
+        runBlocking {
+            prefs = viewModel.ViewModelGetPreferences()
         }
-    }
-}
+        //Log.d(TAG,prefs.id.toString())
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NewThermometerTheme {
-        Greeting("Android")
+        setContentView(R.layout.settings_activity)
+
     }
 }

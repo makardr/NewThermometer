@@ -39,6 +39,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -61,7 +62,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
@@ -85,6 +86,7 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.47")
     ksp ("com.google.dagger:hilt-android-compiler:2.41")
     implementation ("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     ksp ("androidx.hilt:hilt-compiler:1.0.0")
 
     // Local unit tests
@@ -95,6 +97,7 @@ dependencies {
     testImplementation ("com.google.truth:truth:1.1.3")
     testImplementation ("com.squareup.okhttp3:mockwebserver:4.9.1")
     testImplementation ("io.mockk:mockk:1.10.5")
+    testImplementation ("com.google.dagger:hilt-android-testing:2.37")
 
 // Instrumentation tests
     androidTestImplementation ("com.google.dagger:hilt-android-testing:2.37")

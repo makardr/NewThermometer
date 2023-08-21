@@ -20,4 +20,6 @@ interface PreferencesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setPreferences(myPreferences: MyPreferences)
 
+    
+
 }

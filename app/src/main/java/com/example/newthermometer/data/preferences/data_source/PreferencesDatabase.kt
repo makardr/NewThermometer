@@ -7,7 +7,8 @@ import com.example.newthermometer.domain.preferences.model.MyPreferences
 
 @Database(
     entities = [MyPreferences::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class PreferencesDatabase: RoomDatabase() {
 
