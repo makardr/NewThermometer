@@ -12,11 +12,10 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(
     private val preferencesUseCases: PreferenceUseCases
 ) : ViewModel() {
-
     init {
-        Log.d("MainActivityViewModel", "Initialized")
-    }
+        Log.d("MainActivityViewModelInit", "Initialized")
 
+    }
 
     suspend fun ViewModelGetPreferences(): MyPreferences {
         return preferencesUseCases.getPreferences()

@@ -16,6 +16,6 @@ class PreferencesRepositoryImpl(
     }
 
     override suspend fun setPreferences(myPreferences: MyPreferences) {
-        dao.setPreferences(myPreferences)
+        dao.setPreferences(myPreferences).also {  }
     }
 }

@@ -1,6 +1,6 @@
 package com.example.newthermometer.domain.use_cases
 
-import com.example.newthermometer.di.AppModule
+import com.example.newthermometer.di.PreferencesModule
 import com.example.newthermometer.domain.preferences.repository.PreferencesRepository
 import com.google.common.truth.Truth
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 
 @HiltAndroidTest
-@UninstallModules(AppModule::class)
+@UninstallModules(PreferencesModule::class)
 class DatabaseTest {
 
     @get:Rule

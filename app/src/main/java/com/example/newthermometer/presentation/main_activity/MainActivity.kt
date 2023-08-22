@@ -1,6 +1,7 @@
 package com.example.newthermometer.presentation.main_activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,13 +13,13 @@ import kotlinx.coroutines.runBlocking
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-    //AppCompatActivity for some reason crashes, would be interesting to figure out why
+class MainActivity : ComponentActivity() {
+    //AppCompatActivity for some reason crashes, would be necessary to figure out why
     //private val viewModel: MainActivityViewModel by viewModels()
     //private lateinit var viewModel: MainActivityViewModel
     private val viewModel: MainActivityViewModel by viewModels()
     val TAG = "MainActivity"
-    private lateinit var prefs: MyPreferences
+    lateinit var prefs: MyPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
@@ -28,13 +29,17 @@ class MainActivity : AppCompatActivity() {
 //        viewModel.myLiveData.observe(this) { data ->
 //            // Handle the data
 //        }
-        runBlocking {
-            prefs = viewModel.ViewModelGetPreferences()
-        }
-        //Log.d(TAG,prefs.id.toString())
+
+        testFunction()
 
 
         setContentView(R.layout.settings_activity)
 
+    }
+    fun testFunction() {
+        runBlocking {
+            prefs = viewModel.ViewModelGetPreferences()
+        }
+        Log.d(TAG, prefs.refreshTimer.toString())
     }
 }
