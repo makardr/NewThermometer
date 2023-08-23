@@ -6,7 +6,7 @@ import com.example.newthermometer.domain.preferences.repository.PreferencesRepos
 class SetPreferences(
     private val repository: PreferencesRepository
 ) {
-    suspend operator fun invoke(): MyPreferences{
-        return repository.getPreferences()
+    suspend operator fun invoke(preferences: MyPreferences){
+        return repository.setPreferences(preferences)
     }
 }

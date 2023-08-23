@@ -9,7 +9,7 @@ data class MyPreferences(
     @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
     val connectionAddress: String?,
-    val refreshTimer: Int = 5,
+    val refreshTime: Int = 5,
     val temperatureLimitOne: Int = 50,
     val temperatureLimitTwo: Int = 60,
     // To be implemented in the future

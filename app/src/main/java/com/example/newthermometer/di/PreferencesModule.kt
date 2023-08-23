@@ -24,7 +24,7 @@ object PreferencesModule {
             app,
             PreferencesDatabase::class.java,
             PreferencesDatabase.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
@@ -37,8 +37,7 @@ object PreferencesModule {
     @Singleton
     fun providePreferencesUseCases(repository: PreferencesRepository): PreferenceUseCases {
         return PreferenceUseCases(
-            getPreferences = GetPreferences(repository),
-            setPreferences = SetPreferences(repository)
+            getPreferences = GetPreferences(repository), setPreferences = SetPreferences(repository)
         )
     }
 }
