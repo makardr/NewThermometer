@@ -5,25 +5,43 @@ import androidx.lifecycle.ViewModel
 import com.example.newthermometer.domain.preferences.model.MyPreferences
 import com.example.newthermometer.domain.use_cases.preference_use_cases.PreferenceUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.lang.NumberFormatException
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class SettingsActivityViewModel @Inject constructor(
-    private val preferencesUseCases: PreferenceUseCases
+    private var preferencesUseCases: PreferenceUseCases
 ) : ViewModel() {
-    var TAG = "SettingsActivityViewModel"
+    private var TAG = "SettingsActivityViewModel"
+
     init {
         Log.d("MainActivityViewModelInit", "Initialized")
 
     }
 
-    suspend fun setPreferences(){
-        Log.d(TAG, "Preferences set")
-//        preferencesUseCases.setPreferences(preferences)
+    suspend fun getPreferences(): MyPreferences {
+        return preferencesUseCases.getPreferences()
     }
 
-    suspend fun ViewModelGetPreferences(): MyPreferences {
-        return preferencesUseCases.getPreferences()
+    suspend fun setPreferences(
+        address: String,
+        refreshTimeString: String,
+        temperatureLimitOneString: String,
+        temperatureLimitTwoString: String
+    ) {
+        try {
+            preferencesUseCases.setPreferences(MyPreferences(
+                connectionAddress = address,
+                refreshTime = refreshTimeString.toInt(),
+                temperatureLimitOne = temperatureLimitOneString.toInt(),
+                temperatureLimitTwo = temperatureLimitTwoString.toInt()
+            ))
+        } catch (_: NumberFormatException) {
+            Log.e(TAG, "Input is wrong")
+        }
+
+
+        Log.d(TAG, "Preferences set")
+
     }
 }

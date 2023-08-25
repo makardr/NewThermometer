@@ -6,48 +6,98 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvActivityLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Settings activity" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/tvActivityLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Settings activity" />
 
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="TextView" />
 
-        <TextView
-            android:id="@+id/tvRefreshTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/tvRefreshTime"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="TextView" />
 
-        <TextView
-            android:id="@+id/tvLimitOne"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/tvLimitOne"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="TextView" />
 
-        <TextView
-            android:id="@+id/tvLimitTwo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/tvLimitTwo"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="TextView" />
 
-        <Button
-            android:id="@+id/btnSetPreferences"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Change preferences" />
+            <Button
+                android:id="@+id/btnSetPreferences"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change preferences" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Add your elements here -->
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <EditText
+                android:id="@+id/etAddress"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="Ip address" />
+
+
+            <EditText
+                android:id="@+id/etRefreshTime"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="Refresh time" />
+
+            <EditText
+                android:id="@+id/etLimitOne"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="Notification limit one" />
+
+            <EditText
+                android:id="@+id/etLimitTwo"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="Notification limit two" />
+        </LinearLayout>
     </LinearLayout>
+
 </layout>

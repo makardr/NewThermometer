@@ -15,3 +15,5 @@ data class MyPreferences(
     // To be implemented in the future
     //val temperatureLimits: List<Int>?
 )
+
+class InvalidPreferencesException(message: String): Exception(message)
