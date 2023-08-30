@@ -37,7 +37,7 @@ object PreferencesModule {
     @Singleton
     fun providePreferencesUseCases(repository: PreferencesRepository): PreferenceUseCases {
         return PreferenceUseCases(
-            getPreferences = GetPreferences(repository), setPreferences = SetPreferences(repository)
+            getPreferences = GetPreferences(repository),  setPreferences = SetPreferences(repository)
         )
     }
 }

@@ -2,11 +2,11 @@ package com.example.newthermometer.data.preferences.data_source
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.newthermometer.domain.preferences.model.MyPreferences
+import com.example.newthermometer.domain.preferences.model.PreferencesEntity
 
 
 @Database(
-    entities = [MyPreferences::class],
+    entities = [PreferencesEntity::class],
     version = 1,
     exportSchema = false
 )
