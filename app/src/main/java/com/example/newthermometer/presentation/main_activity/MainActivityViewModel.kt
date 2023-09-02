@@ -18,7 +18,7 @@ class MainActivityViewModel @Inject constructor(
 
     }
 
-    suspend fun ViewModelGetPreferences(): Flow<PreferencesEntity?> {
+    fun ViewModelGetPreferences(): Flow<PreferencesEntity?> {
         return preferencesUseCases.getPreferences()
     }
 }

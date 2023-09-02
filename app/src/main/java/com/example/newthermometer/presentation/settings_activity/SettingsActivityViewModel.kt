@@ -26,32 +26,24 @@ class SettingsActivityViewModel @Inject constructor(
     private var TAG = "SettingsActivityViewModel"
     private var preferencesStaringValue = PreferencesEntity(connectionAddress = "none")
 
-//    Live data
     val preferencesLiveData: MutableLiveData<PreferencesEntity> by lazy {
         MutableLiveData<PreferencesEntity>()
     }
 
     init {
-        Log.d(TAG, "Initialized")
-//        preferencesLiveData.value=preferencesStaringValue
         preferencesLiveData.postValue(preferencesStaringValue)
         viewModelScope.launch {
             preferencesUseCases.getPreferences()
                 .collectLatest { preferences ->
-                    Log.d(TAG, "Trying to do flow")
                     if (preferences != null) {
-                        Log.d(TAG, "Not null")
                         Log.d(TAG, preferences.connectionAddress.toString())
                         preferencesLiveData.postValue(preferences)
                     } else {
-                        preferencesLiveData.postValue(preferencesStaringValue)
+                        preferencesUseCases.setPreferences(preferencesStaringValue)
+                        preferencesLiveData.postValue(preferences)
                     }
                 }
         }
-    }
-
-    fun getPreferences(): LiveData<PreferencesEntity> {
-        return preferencesLiveData
     }
 
     suspend fun setPreferencesViewModel(
@@ -72,9 +64,12 @@ class SettingsActivityViewModel @Inject constructor(
         } catch (_: NumberFormatException) {
             Log.e(TAG, "Input is wrong")
         }
+    }
 
 
-        Log.d(TAG, "Preferences set")
+    fun validatePreferencesEntity(preferencesEntity: PreferencesEntity): Boolean{
 
+
+        return true
     }
 }

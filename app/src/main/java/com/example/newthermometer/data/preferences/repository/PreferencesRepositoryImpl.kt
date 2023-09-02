@@ -16,27 +16,6 @@ class PreferencesRepositoryImpl(
     private val TAG = "PreferencesRepositoryImpl"
 
     override fun getPreferences(): Flow<PreferencesEntity?> {
-//        dao.getPreferences().let { prefFlow ->
-//            prefFlow
-//                .onEmpty {
-//                    Log.d(TAG, "onEmpty")
-//                }
-//                .onStart {
-//                    Log.d(TAG, "onStart")
-//                    if(this==null){
-//                        Log.d(TAG, "This is null, setting up PreferencesEntity")
-//                        setPreferences(PreferencesEntity(connectionAddress = "test preferences"))
-//                    }
-//                }
-//                .catch { exception ->
-//                    Log.e(TAG, exception.message.toString())
-//                }
-//                .collectLatest {
-//                    Log.d(TAG, "Object is " + it.toString())
-//
-//                }
-//            return prefFlow
-//        }
         return dao.getPreferences()
     }
 
