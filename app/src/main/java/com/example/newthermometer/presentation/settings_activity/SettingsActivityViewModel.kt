@@ -1,22 +1,18 @@
 package com.example.newthermometer.presentation.settings_activity
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newthermometer.domain.preferences.model.PreferencesEntity
 import com.example.newthermometer.domain.use_cases.preference_use_cases.PreferenceUseCases
+import com.example.newthermometer.presentation.settings_activity.input_validation.NegativeNumberException
+import com.example.newthermometer.presentation.settings_activity.input_validation.NotANumberException
+import com.example.newthermometer.presentation.settings_activity.input_validation.OutOfRangeException
+import com.example.newthermometer.presentation.settings_activity.input_validation.ValidationResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEmpty
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.lang.NumberFormatException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +26,8 @@ class SettingsActivityViewModel @Inject constructor(
         MutableLiveData<PreferencesEntity>()
     }
 
+
+
     init {
         preferencesLiveData.postValue(preferencesStaringValue)
         viewModelScope.launch {
@@ -40,7 +38,8 @@ class SettingsActivityViewModel @Inject constructor(
                         preferencesLiveData.postValue(preferences)
                     } else {
                         preferencesUseCases.setPreferences(preferencesStaringValue)
-                        preferencesLiveData.postValue(preferences)
+                        preferencesLiveData.postValue(preferencesStaringValue)
+//                        TODO("Better handling of empty database")
                     }
                 }
         }
@@ -52,24 +51,43 @@ class SettingsActivityViewModel @Inject constructor(
         temperatureLimitOneString: String,
         temperatureLimitTwoString: String
     ) {
-        try {
-            preferencesUseCases.setPreferences(
-                PreferencesEntity(
-                    connectionAddress = address,
-                    refreshTime = refreshTimeString.toInt(),
-                    temperatureLimitOne = temperatureLimitOneString.toInt(),
-                    temperatureLimitTwo = temperatureLimitTwoString.toInt()
-                )
-            )
-        } catch (_: NumberFormatException) {
-            Log.e(TAG, "Input is wrong")
+        var validation = validatePreferencesEntity(address, refreshTimeString, temperatureLimitOneString, temperatureLimitTwoString)
+        when (validation){
+            is ValidationResult.Success -> preferencesUseCases.setPreferences(validation.validatedData)
+            is ValidationResult.Exception -> Log.e(TAG,validation.error.toString())
         }
     }
 
 
-    fun validatePreferencesEntity(preferencesEntity: PreferencesEntity): Boolean{
-
-
-        return true
+    fun validatePreferencesEntity(address:String,refresh: String,limitOne: String,limitTwo:String): ValidationResult{
+//        Check if convertable to int and not null
+        if (
+            refresh.toIntOrNull()!=null &&
+            limitOne.toIntOrNull()!=null &&
+            limitTwo.toIntOrNull()!=null
+        ){
+            //        Check if numbers are not negative
+            if (
+                refresh.toInt() >= 0 &&
+                limitOne.toInt()  >= 0 &&
+                limitTwo.toInt()  >= 0
+            ){
+                //        Check if numbers are within range
+                if (true){
+                    return ValidationResult.Success(PreferencesEntity(
+                        connectionAddress = address,
+                        refreshTime = refresh.toInt(),
+                        temperatureLimitOne = limitOne.toInt(),
+                        temperatureLimitTwo = limitTwo.toInt()
+                    ))
+                }else{
+                    return ValidationResult.Exception(OutOfRangeException())
+                }
+            }else{
+                return ValidationResult.Exception(NegativeNumberException())
+            }
+        }else{
+            return ValidationResult.Exception(NotANumberException())
+        }
     }
 }

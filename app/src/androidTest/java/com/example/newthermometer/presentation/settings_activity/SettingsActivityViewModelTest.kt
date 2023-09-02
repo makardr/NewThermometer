@@ -1,20 +1,16 @@
 package com.example.newthermometer.presentation.settings_activity
 
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.newthermometer.di.PreferencesModule
 import com.example.newthermometer.domain.preferences.model.PreferencesEntity
-import com.example.newthermometer.domain.use_cases.preference_use_cases.GetPreferences
 import com.example.newthermometer.domain.use_cases.preference_use_cases.PreferenceUseCases
-import com.example.newthermometer.domain.use_cases.preference_use_cases.SetPreferences
+import com.example.newthermometer.presentation.settings_activity.input_validation.NegativeNumberException
+import com.example.newthermometer.presentation.settings_activity.input_validation.NotANumberException
+import com.example.newthermometer.presentation.settings_activity.input_validation.ValidationResult
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import io.mockk.mockk
-import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -67,20 +63,58 @@ class SettingsActivityViewModelTest {
 
     }
 
+
+
     @Test
-    fun setPreferencesViewModel() {
+    fun preferencesEntitySuccess() {
+        val address = "Test"
+        val refreshTimeString= "7"
+        val tLimitOne = "50"
+        val tLimitTwo = "60"
+
+        assertThat(viewModel.validatePreferencesEntity(address,refreshTimeString,tLimitOne,tLimitTwo)).isEqualTo(
+            ValidationResult.Success(PreferencesEntity(connectionAddress = address, refreshTime = refreshTimeString.toInt(), temperatureLimitOne = tLimitOne.toInt(), temperatureLimitTwo = tLimitTwo.toInt()))
+        )
+
+    }
+    @Test
+    fun preferencesEntityNegativeIntegersNegativeNumbersException() {
+        val address = "Test"
+        val refreshTimeString= "-7"
+        val tLimitOne = "-50"
+        val tLimitTwo = "-60"
+
+        val result = viewModel.validatePreferencesEntity(address,refreshTimeString,tLimitOne,tLimitTwo)
+
+        assertThat(result).isInstanceOf(ValidationResult.Exception::class.java)
+        assertThat((result as ValidationResult.Exception).error).isInstanceOf(NegativeNumberException::class.java)
     }
 
     @Test
-    fun validatePreferencesEntity() {
+    fun preferencesEntityValidationNotANumberException() {
+        val address = "Test"
+        val refreshTimeString= "t"
+        val tLimitOne = "t"
+        val tLimitTwo = "t"
+
+        val result = viewModel.validatePreferencesEntity(address,refreshTimeString,tLimitOne,tLimitTwo)
+        assertThat(result).isInstanceOf(
+            ValidationResult.Exception::class.java
+        )
+        assertThat((result as ValidationResult.Exception).error).isInstanceOf(NotANumberException::class.java)
+//        assertThat((result.error as NotANumberException).message).isEqualTo(NotANumberException())
     }
 
     @Test
-    fun preferencesEntityValidationIsCorrect() {
-        assertThat(viewModel.validatePreferencesEntity(PreferencesEntity(connectionAddress = "Test"))).isTrue()
+    fun preferencesEntityValidationIsNullNotANumberException() {
+        val address = ""
+        val refreshTimeString= ""
+        val tLimitOne = ""
+        val tLimitTwo = ""
+        val result = viewModel.validatePreferencesEntity(address,refreshTimeString,tLimitOne,tLimitTwo)
+
+        assertThat(result).isInstanceOf(ValidationResult.Exception::class.java)
+        assertThat((result as ValidationResult.Exception).error).isInstanceOf(NotANumberException::class.java)
     }
 
-    @Test
-    fun preferencesEntityValidationIsIncorrect() {
-    }
 }
