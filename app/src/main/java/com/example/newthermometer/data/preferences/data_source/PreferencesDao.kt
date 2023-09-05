@@ -10,8 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PreferencesDao {
-//    Make it into LiveData in the future
-    @Query("SELECT * FROM preferences_table WHERE id = 0")
+    @Query("SELECT * FROM preferences_table LIMIT 1")
     fun getPreferences(): Flow<PreferencesEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

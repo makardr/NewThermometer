@@ -36,11 +36,19 @@ class DatabaseTest {
 
 
     @Test
-    fun databaseFreshReturnsNull() = runTest {
+    fun databaseFreshReturnsNotNull() = runTest {
         preferencesUseCases.getPreferences()
             .take(1)
             .collect { preferencesEntity ->
-                assertThat(preferencesEntity).isNull()
+                assertThat(preferencesEntity).isNotNull()
+            }
+    }
+    @Test
+    fun databaseFreshReturnsPreferencesEntity() = runTest {
+        preferencesUseCases.getPreferences()
+            .take(1)
+            .collect { preferencesEntity ->
+                assertThat(preferencesEntity).isInstanceOf(PreferencesEntity::class.java)
             }
     }
 

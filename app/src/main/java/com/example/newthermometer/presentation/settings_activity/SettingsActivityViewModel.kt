@@ -33,14 +33,7 @@ class SettingsActivityViewModel @Inject constructor(
         viewModelScope.launch {
             preferencesUseCases.getPreferences()
                 .collectLatest { preferences ->
-                    if (preferences != null) {
-                        Log.d(TAG, preferences.connectionAddress.toString())
-                        preferencesLiveData.postValue(preferences)
-                    } else {
-                        preferencesUseCases.setPreferences(preferencesStaringValue)
-                        preferencesLiveData.postValue(preferencesStaringValue)
-//                        TODO("Better handling of empty database")
-                    }
+                    preferencesLiveData.postValue(preferences)
                 }
         }
     }
@@ -54,7 +47,7 @@ class SettingsActivityViewModel @Inject constructor(
         var validation = validatePreferencesEntity(address, refreshTimeString, temperatureLimitOneString, temperatureLimitTwoString)
         when (validation){
             is ValidationResult.Success -> preferencesUseCases.setPreferences(validation.validatedData)
-            is ValidationResult.Exception -> Log.e(TAG,validation.error.toString())
+            is ValidationResult.Exception -> Log.e(TAG, validation.error.toString())
         }
     }
 
@@ -68,9 +61,7 @@ class SettingsActivityViewModel @Inject constructor(
         ){
             //        Check if numbers are not negative
             if (
-                refresh.toInt() >= 0 &&
-                limitOne.toInt()  >= 0 &&
-                limitTwo.toInt()  >= 0
+                refresh.toInt() > 0
             ){
                 //        Check if numbers are within range
                 if (true){

@@ -5,17 +5,14 @@ import com.example.newthermometer.data.preferences.data_source.PreferencesDao
 import com.example.newthermometer.domain.preferences.model.PreferencesEntity
 import com.example.newthermometer.domain.preferences.repository.PreferencesRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEmpty
-import kotlinx.coroutines.flow.onStart
+
+import kotlinx.coroutines.flow.map
 
 class PreferencesRepositoryImpl(
     private val dao: PreferencesDao
 ) : PreferencesRepository {
     private val TAG = "PreferencesRepositoryImpl"
-
-    override fun getPreferences(): Flow<PreferencesEntity?> {
+    override suspend fun getPreferences(): Flow<PreferencesEntity> {
         return dao.getPreferences()
     }
 

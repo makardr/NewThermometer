@@ -12,6 +12,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.runBlocking
 import javax.inject.Singleton
 
 @Module
@@ -30,6 +31,9 @@ object PreferencesModule {
     @Provides
     @Singleton
     fun providePreferencesRepository(database: PreferencesDatabase): PreferencesRepository {
+        runBlocking{
+            database.initializeDatabase()
+        }
         return PreferencesRepositoryImpl(database.preferencesDao)
     }
 

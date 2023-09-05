@@ -117,4 +117,15 @@ class SettingsActivityViewModelTest {
         assertThat((result as ValidationResult.Exception).error).isInstanceOf(NotANumberException::class.java)
     }
 
+    @Test
+    fun preferencesEntityValidationIsFloatNotANumberException() {
+        val address = "dasfda"
+        val refreshTimeString= "1,2"
+        val tLimitOne = "1,3"
+        val tLimitTwo = "1,2"
+        val result = viewModel.validatePreferencesEntity(address,refreshTimeString,tLimitOne,tLimitTwo)
+
+        assertThat(result).isInstanceOf(ValidationResult.Exception::class.java)
+        assertThat((result as ValidationResult.Exception).error).isInstanceOf(NotANumberException::class.java)
+    }
 }

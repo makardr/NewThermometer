@@ -8,7 +8,7 @@ class GetPreferences(
     private val repository: PreferencesRepository
 ) {
     //If transfer to flow remove suspend
-    operator fun invoke():Flow<PreferencesEntity?>{
+    suspend operator fun invoke():Flow<PreferencesEntity>{
         return repository.getPreferences()
     }
 }

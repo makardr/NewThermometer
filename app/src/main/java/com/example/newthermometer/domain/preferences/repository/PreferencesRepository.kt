@@ -4,8 +4,6 @@ import com.example.newthermometer.domain.preferences.model.PreferencesEntity
 import kotlinx.coroutines.flow.Flow
 
 interface PreferencesRepository {
-//    When I will transfer to live data I think I will have to make getPreferences not suspend
-
-    fun getPreferences(): Flow<PreferencesEntity?>
+    suspend fun getPreferences(): Flow<PreferencesEntity>
     suspend fun setPreferences(preferencesEntity: PreferencesEntity)
 }

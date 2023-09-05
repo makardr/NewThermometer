@@ -12,6 +12,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Singleton
 
 
@@ -30,6 +33,9 @@ object AndroidTestAppModule {
     @Provides
     @Singleton
     fun providePreferencesRepository(database: PreferencesDatabase): PreferencesRepository {
+        runBlocking(){
+            database.initializeDatabase()
+        }
         return PreferencesRepositoryImpl(database.preferencesDao)
     }
 
