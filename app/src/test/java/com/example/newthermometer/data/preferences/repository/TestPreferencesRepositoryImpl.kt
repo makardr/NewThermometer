@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 
 class TestPreferencesRepositoryImpl : PreferencesRepository{
     private var preferencesEntity = PreferencesEntity(connectionAddress = null)
-    override fun getPreferences(): Flow<PreferencesEntity?> {
+    override suspend fun getPreferences(): Flow<PreferencesEntity> {
         return flow {
             emit(preferencesEntity)
         }

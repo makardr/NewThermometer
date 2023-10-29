@@ -20,9 +20,17 @@ class SettingsActivity : ComponentActivity() {
     private lateinit var binding: SettingsActivityBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_activity)
         binding = DataBindingUtil.setContentView(this, R.layout.settings_activity)
-
+//        TODO("""
+//            It would actually will probably be better to use properties instead of that whole thing with database
+//            Example:
+//            val properties = Properties()
+//                properties.load(ClassLoader.getSystemResourceAsStream("config.properties"))
+//
+//                val appValue = properties.getProperty("AppValue")
+//                println("AppValue: $ appValue")
+//
+//        """.trimIndent())
 //        Observe preferences
         val preferencesObserver = Observer<PreferencesEntity> {
             binding.tvAddress.text = it.connectionAddress
@@ -31,22 +39,18 @@ class SettingsActivity : ComponentActivity() {
             binding.tvLimitTwo.text = it.temperatureLimitTwo.toString()
         }
 
-        viewModel.preferencesLiveData.observe(this,preferencesObserver)
+        viewModel.preferencesLiveData.observe(this, preferencesObserver)
 
 //        Button to set preferences
-        val btnSetPreferences = findViewById<Button>(R.id.btnSetPreferences)
-        btnSetPreferences.setOnClickListener {
+        binding.btnSetPreferences.setOnClickListener {
             runBlocking {
                 viewModel.setPreferencesViewModel(
                     binding.etAddress.text.toString(),
                     binding.etRefreshTime.text.toString(),
                     binding.etLimitOne.text.toString(),
-                    binding.etLimitTwo.text.toString())
+                    binding.etLimitTwo.text.toString()
+                )
             }
         }
-
-
     }
-
-
 }

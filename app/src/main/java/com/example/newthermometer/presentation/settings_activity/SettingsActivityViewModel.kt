@@ -27,9 +27,8 @@ class SettingsActivityViewModel @Inject constructor(
     }
 
 
-
     init {
-        preferencesLiveData.postValue(preferencesStaringValue)
+//        preferencesLiveData.postValue(preferencesStaringValue)
         viewModelScope.launch {
             preferencesUseCases.getPreferences()
                 .collectLatest { preferences ->
